@@ -1,16 +1,35 @@
 ﻿
+using BlazorTasks.Models;
+
 namespace BlazorTasks.Services
 {
     public class TaskService
     {
-        private readonly List<string> _tasks = new();
+        private readonly List<TodoTask> _tasks = new();
+        private int _id = 1;
 
-        public List<string> GetTasks() => _tasks;
+        public IReadOnlyList<TodoTask> GetTasks()
+            => _tasks;
 
-        public void AddTask(string task)
+        public void AddTask(string title)
         {
-            _tasks.Add(task);
+            _tasks.Add(new TodoTask
+            {
+                Id = _id++,
+                Title = title,
+                IsCompleted = false
+            });
+        }
+
+        public void Toggle(int id)
+        {
+            var task = _tasks.FirstOrDefault(t => t.Id == id);
+            if (task != null)
+            {
+                task.IsCompleted = !task.IsCompleted;
+            }
         }
     }
+
 
 }
