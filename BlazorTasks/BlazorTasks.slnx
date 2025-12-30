@@ -1,6 +1,4 @@
 <Solution>
   <Project Path="../BlazorTasks.Api/BlazorTasks.Api.csproj" />
-  <Project Path="BlazorTasks.AppHost/BlazorTasks.AppHost.csproj" />
   <Project Path="BlazorTasks.csproj" />
-  <Project Path="BlazorTasks.ServiceDefaults/BlazorTasks.ServiceDefaults.csproj" />
 </Solution>
