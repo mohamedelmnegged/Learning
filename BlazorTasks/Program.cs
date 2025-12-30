@@ -7,8 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddSingleton<TaskService>();
-
+builder.Services.AddHttpClient<TaskService>(c =>
+{
+    c.BaseAddress = new Uri("https://localhost:7191/");
+});
 
 var app = builder.Build();
 
