@@ -10,7 +10,7 @@
 <button class="btn btn-primary" @onclick="AddTask">Add</button>
 
 <ul>
-    @foreach (var task in taskService.GetTasks())
+    @foreach (var task in tasks)
     {
         <li>
             <input type="checkbox"
@@ -26,18 +26,28 @@
 
 @code {
     string newTask = "";
-
-    void AddTask()
+    List<TodoTask> tasks = new();
+    async Task TasksStateChanged()
+    {
+        tasks = await taskService.GetTasksAsync();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await TasksStateChanged();
+    }
+    async Task AddTask()
     {
         if (!string.IsNullOrWhiteSpace(newTask))
         {
-            taskService.AddTask(newTask);
+            await taskService.AddTaskAsync(newTask);
             newTask = "";
         }
+        await TasksStateChanged(); 
     }
 
-    void Toggle(int id)
+    async Task Toggle(int id)
     {
-        taskService.Toggle(id);
+        await taskService.ToggleAsync(id);
+        await TasksStateChanged();
     }
 }

@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../BlazorTasks.Api/BlazorTasks.Api.csproj" />
   <Project Path="BlazorTasks.csproj" />
 </Solution>

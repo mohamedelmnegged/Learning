@@ -1,35 +1,23 @@
-﻿
-using BlazorTasks.Models;
+﻿using BlazorTasks.Models;
 
 namespace BlazorTasks.Services
 {
     public class TaskService
     {
-        private readonly List<TodoTask> _tasks = new();
-        private int _id = 1;
+        private readonly HttpClient _http;
 
-        public IReadOnlyList<TodoTask> GetTasks()
-            => _tasks;
-
-        public void AddTask(string title)
+        public TaskService(HttpClient http)
         {
-            _tasks.Add(new TodoTask
-            {
-                Id = _id++,
-                Title = title,
-                IsCompleted = false
-            });
+            _http = http;
         }
 
-        public void Toggle(int id)
-        {
-            var task = _tasks.FirstOrDefault(t => t.Id == id);
-            if (task != null)
-            {
-                task.IsCompleted = !task.IsCompleted;
-            }
-        }
+        public async Task<List<TodoTask>> GetTasksAsync()
+            => await _http.GetFromJsonAsync<List<TodoTask>>("api/tasks") ?? new();
+
+        public async Task AddTaskAsync(string title)
+            => await _http.PostAsJsonAsync("api/tasks", title);
+
+        public async Task ToggleAsync(int id)
+            => await _http.PutAsync($"api/tasks/{id}/toggle", null);
     }
-
-
 }
