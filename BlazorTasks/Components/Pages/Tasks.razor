@@ -1,0 +1,34 @@
+﻿@page "/tasks"
+@rendermode InteractiveServer
+@inject TaskService taskService
+
+<PageTitle>Tasks</PageTitle>
+
+<h3>My Tasks</h3>
+
+<input @bind="newTask" placeholder="New task" />
+<button @onclick="AddTask">Add</button>
+
+<ul>
+    @foreach (var task in tasks)
+    {
+        <li>@task</li>
+    }
+</ul>
+
+@code {
+    string newTask = "";
+    List<string> tasks = new();
+    protected override void OnInitialized()
+    {
+        tasks = taskService.GetTasks();
+    }
+    void AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(newTask))
+        {
+            taskService.AddTask(newTask);
+            newTask = "";
+        }
+    }
+}
