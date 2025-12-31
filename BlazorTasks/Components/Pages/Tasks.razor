@@ -22,7 +22,7 @@
 <EditForm Model="newTask" OnValidSubmit="AddTask">
     <InputText @bind-Value="newTask" placeholder="New task" />
     <AppButton>Add</AppButton>
-    <ValidationMessage For="() => newTask" />
+    <ValidationMessage For="@(() => newTask)" />
 </EditForm>
 
 @code {

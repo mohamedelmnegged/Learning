@@ -1,0 +1,23 @@
+﻿@rendermode InteractiveServer
+@inject AppState State
+
+<AppButton OnClick="Toggle"
+           CssClass="btn btn-primary btn-sm">
+    Toggle
+</AppButton>
+
+<h6 class="mb-0">
+    Theme: @State.Theme
+</h6>
+
+
+@code {
+    protected override void OnInitialized()
+       => State.OnChange += StateHasChanged;
+
+    void Toggle()
+        => State.SetTheme(State.Theme == "light" ? "dark" : "light");
+
+    public void Dispose()
+        => State.OnChange -= StateHasChanged;
+}
