@@ -1,3 +1,4 @@
+using BlazorTasks;
 using BlazorTasks.Components;
 using BlazorTasks.Services;
 
@@ -11,6 +12,8 @@ builder.Services.AddHttpClient<TaskService>(c =>
 {
     c.BaseAddress = new Uri("https://localhost:7191/");
 });
+
+builder.Services.AddScoped<AppState>();
 
 var app = builder.Build();
 

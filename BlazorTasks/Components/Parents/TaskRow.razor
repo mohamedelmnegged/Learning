@@ -1,0 +1,16 @@
+﻿<div>
+    <input type="checkbox"
+           checked="@Task.IsCompleted"
+           @onchange="() => OnToggle.InvokeAsync(Task.Id)" />
+
+    <span style="@(Task.IsCompleted ? "text-decoration: line-through" : "")">
+        @Task.Title
+    </span>
+</div>
+
+
+
+@code {
+    [Parameter] public TodoTask Task { get; set; } = default!;
+    [Parameter] public EventCallback<int> OnToggle { get; set; }
+}
