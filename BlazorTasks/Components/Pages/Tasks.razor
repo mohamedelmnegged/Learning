@@ -6,8 +6,8 @@
 
 <h3>My Tasks</h3>
 
-<input @bind="newTask" placeholder="New task" />
-<button class="btn btn-primary" @onclick="AddTask">Add</button>
+@* <input @bind="newTask" placeholder="New task" />
+<button class="btn btn-primary" @onclick="AddTask">Add</button> *@
 
 <ul>
     @foreach (var task in tasks)
@@ -24,6 +24,12 @@
     }
 </ul>
 
+<EditForm Model="newTask" OnValidSubmit="AddTask">
+    <InputText @bind-Value="newTask" placeholder="New task" />
+    <button type="submit" class="btn btn-primary">Add</button>
+    <ValidationMessage For="() => newTask" />
+</EditForm>
+
 @code {
     string newTask = "";
     List<TodoTask> tasks = new();
@@ -35,12 +41,31 @@
     {
         await TasksStateChanged();
     }
+    // protected override async Task OnParametersSetAsync()
+    // {
+    //     await TasksStateChanged();
+    // }
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     if (firstRender)
+    //     {
+    //         await TasksStateChanged();
+    //         StateHasChanged();
+    //     }
+    // }
     async Task AddTask()
     {
         if (!string.IsNullOrWhiteSpace(newTask))
         {
             await taskService.AddTaskAsync(newTask);
             newTask = "";
+        }
+        else
+        {
+            var editContext = new EditContext(newTask);
+            var messages = new ValidationMessageStore(editContext);
+            messages.Add(() => newTask, "Error");
+            StateHasChanged(); 
         }
         await TasksStateChanged(); 
     }
