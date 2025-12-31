@@ -13,16 +13,11 @@
     @foreach (var task in tasks)
     {
         <li>
-            <input type="checkbox"
-                   checked="@task.IsCompleted"
-                   @onchange="() => Toggle(task.Id)" />
-
-            <span style="@(task.IsCompleted ? "text-decoration: line-through" : "")">
-                @task.Title
-            </span>
+            <TaskRow Task="task" OnToggle="Toggle" />
         </li>
     }
 </ul>
+
 
 <EditForm Model="newTask" OnValidSubmit="AddTask">
     <InputText @bind-Value="newTask" placeholder="New task" />
@@ -65,9 +60,9 @@
             var editContext = new EditContext(newTask);
             var messages = new ValidationMessageStore(editContext);
             messages.Add(() => newTask, "Error");
-            StateHasChanged(); 
+            StateHasChanged();
         }
-        await TasksStateChanged(); 
+        await TasksStateChanged();
     }
 
     async Task Toggle(int id)
