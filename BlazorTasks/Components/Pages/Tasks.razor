@@ -5,9 +5,9 @@
 <PageTitle>Tasks</PageTitle>
 
 <h3>My Tasks</h3>
-
-@* <input @bind="newTask" placeholder="New task" />
-<button class="btn btn-primary" @onclick="AddTask">Add</button> *@
+@* 
+<input @bind="newTask" placeholder="New task" />
+<AppButton OnClick="AddTask">Add</AppButton> *@
 
 <ul>
     @foreach (var task in tasks)
@@ -26,7 +26,7 @@
 
 <EditForm Model="newTask" OnValidSubmit="AddTask">
     <InputText @bind-Value="newTask" placeholder="New task" />
-    <button type="submit" class="btn btn-primary">Add</button>
+    <AppButton>Add</AppButton>
     <ValidationMessage For="() => newTask" />
 </EditForm>
 
